@@ -1,0 +1,6 @@
+__author__ = "Benjamin Klein"
+__maintainer__ = "Benjamin Klein"
+__email__ = "hackbard23@gmail.com"
+__copyright__ = "Copyright 2018"
+__license__ = "GNU GPL v3"
+__version__ = "0.0.1"

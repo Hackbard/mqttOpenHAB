@@ -1,0 +1,25 @@
+{
+  "Wohnzimmer Stehlampe": {
+    "name": "miio_basic_37501c0a_power",
+    "type": "light",
+    "room": "Wohnzimmer",
+    "light_source": "Stehlampe"
+  },
+  "Schlafzimmer Deckenlampe": {
+    "name": "miio_basic_28339448_power",
+    "type": "light",
+    "room": "Schlafzimmer",
+    "light_source": "Deckenleuchte"
+  },
+  "Kinderzimmer Deckenlampe": {
+    "name": "miio_basic_052BED4C_power",
+    "type": "light",
+    "room": "Kinderzimmer",
+    "light_source": "Deckenleuchte"
+  },
+  "h1": {
+    "name": "Wohnzimmer Heizung Balkon",
+    "type": "heater",
+    "room": "Wohnzimmer"
+  }
+}
