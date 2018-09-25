@@ -29,6 +29,10 @@ class Heater:
         room = snip.getSlotValueByName("room")
         temperature = snip.getSlotValueByName("temperature")
 
+        if temperature is None:
+            logging.info("No Temperature")
+            return None
+
         logging.debug("Room: " + room)
         logging.debug("Temperature: " + str(temperature))
 
