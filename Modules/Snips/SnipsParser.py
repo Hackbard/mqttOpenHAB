@@ -7,7 +7,7 @@ class SnipsParser:
     @staticmethod
     def convertFromJson(payload):
         logging.debug("Slot.give_slots_from_string " + str(payload))
-        data = json.loads(payload)
+        data = json.loads(payload.decode("utf-8"))
         parser = SnipsParser()
         return parser.generateObject(data)
 
