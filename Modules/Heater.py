@@ -5,7 +5,7 @@ from Modules.OpenHABProxy import OpenHABProxy
 
 
 class Heater:
-    __channel_on_off = "hermes/intent/hackbard:HeizungToTemperature"
+    __channel_manuel_degree = "hermes/intent/hackbard:HeizungToTemperature"
     __channel_boost = "hermes/intent/hackbard:HeizungBoost"
 
     __mqtt_client = None
@@ -19,7 +19,7 @@ class Heater:
 
     def trackChannels(self):
         logging.debug("Module.Heater track Channels")
-        self.__mqtt_client.subscribe(self.__channel_on_off, self.onTemperatureChange)
+        self.__mqtt_client.subscribe(self.__channel_manuel_degree, self.onTemperatureChange)
         self.__mqtt_client.subscribe(self.__channel_boost, self.onBoost)
 
     def onTemperatureChange(self, client, userdata, msg):
@@ -30,10 +30,17 @@ class Heater:
         temperature = snip.getSlotValueByName("temperature")
 
         logging.debug("Room: " + room)
-        logging.debug("Temperature: " + temperature)
+        logging.debug("Temperature: " + str(temperature))
 
-        heater = self.__openHAB_proxy.getHeaterByRoom(room)
+        heater_config = self.__openHAB_proxy.getHeaterConfigByRoom(room=room)
 
+        for heater in heater_config:
+            name = heater.get('name')
+            homematic_mode = self.__openHAB_proxy.getItemByName(name + "_MODE")
+            homematic_temperature = self.__openHAB_proxy.getItemByName(name + "_TEMPERATURE_SETTER")
+
+            homematic_mode.state = "MANU-MODE"
+            homematic_temperature.command(float(temperature))
 
     def onBoost(self, client, userdata, msg):
         logging.info("Receive heater.onBoost")

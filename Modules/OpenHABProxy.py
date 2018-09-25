@@ -24,8 +24,11 @@ class OpenHABProxy:
         else:
             OpenHABProxy.__instance = self
             self.openHab = OpenHAB(base_url)
-            self.openhab_items = self.openHab.fetch_all_items()
+            self.reloadItem()
             logging.debug("Retrive openHAB item")
+
+    def reloadItem(self):
+        self.openhab_items = self.openHab.fetch_all_items()
 
     def setConfig(self, config):
         self.__raw_config = config
@@ -40,14 +43,27 @@ class OpenHABProxy:
     def getHeaterByRoom(self, room):
         return self.__getItems(self.__heater, room)
 
-    def getLightByRoom(self, room):
-        return self.__getItems(self.__light, room)
+    def getLight(self, room, source):
+        return self.__getItems(self.__light, room=room, source=source)
 
-    def __getItems(self, data, room):
+    def getItemByName(self, name):
+        return self.openhab_items.get(name)
+
+    def getHeaterConfigByRoom(self, room):
+        return_data = [];
+        for item in self.__heater:
+            if item.get('room').lower() == room.lower():
+                return_data.append(item)
+        return return_data
+
+    def __getItems(self, data, room, source=None):
         return_data = [];
         for item in data:
             if item.get('room').lower() == room.lower():
-                openhab_item = self.openhab_items.get(item.get('name'))
+                if (source is None) or (source is not None and item.get('source').lower() == source):
+                    openhab_item = self.openhab_items.get(item.get('name'))
+
                 if openhab_item:
                     return_data.append(openhab_item)
+
         return return_data

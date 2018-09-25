@@ -29,11 +29,12 @@ class Light:
         room = snip.getSlotValueByName("room")
         light = snip.getSlotValueByName("light")
 
-        logging.debug("Room: " + room)
-        logging.debug("Action: " + action)
+        logging.debug("Room: " + str(room))
+        logging.debug("Action: " + str(action))
+        logging.debug("Licht: " + str(light))
 
         try:
-            lighter = self.__openHAB_proxy.getLightByRoom(room)
+            lighter = self.__openHAB_proxy.getLight(room=room, source=light)
             if action and action == "Einschalten":
                 for light in lighter:
                     light.command('ON')
