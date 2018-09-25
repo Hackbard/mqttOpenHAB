@@ -33,6 +33,9 @@ class Light:
         logging.debug("Action: " + str(action))
         logging.debug("Licht: " + str(light))
 
+        if light.lower() == "leuchte":
+            light = None
+
         try:
             lighter = self.__openHAB_proxy.getLight(room=room, source=light)
             if action and action == "Einschalten":
