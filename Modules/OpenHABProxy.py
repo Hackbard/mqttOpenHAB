@@ -57,8 +57,9 @@ class OpenHABProxy:
         return return_data
 
     def __getItems(self, data, room, source=None):
-        return_data = [];
+        return_data = []
         for item in data:
+            openhab_item = None
             if item.get('room').lower() == room.lower():
                 if (source is None) or (source is not None and item.get('source').lower() == source):
                     openhab_item = self.openhab_items.get(item.get('name'))
